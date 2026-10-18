@@ -1,0 +1,6 @@
+export type Journal={id:string;ordinal:number;name:string;aliases:string[];level:string;note:string};
+const names=['建筑学报','建筑师','城市规划','城市规划学刊','中国园林','风景园林','美术','装饰','世界建筑','新建筑','照明工程学报','美术观察','新美术','天津大学学报（社会科学版）','建筑学报理论专刊 / 学术论文专刊','国际城市规划','规划师','China City Planning Review','时代建筑','现代城市研究','古建园林技术','建筑创作','室内设计与装修','生态城市与绿色建筑','中国建筑教育','建筑史学刊','故宫博物院院刊','建筑节能','艺术百家','艺术评论','国画家','中国文化遗产','民间文化论坛','中国城市林业','南方建筑','建筑遗产','景观设计','西部人居环境学刊','应用声学','城市环境设计（学术版）','建筑技艺','小城镇建设'];
+export const journals:Journal[]=names.map((name,i)=>({id:`college-2021-journal-${i+1}`,ordinal:i+1,name,aliases:i===10?['照明学报']:i===13?['天大学报社科']:i===17?['ccpr']:[],level:i===30?'2':i<8?'15':'10',note:i===30?'目录限定美术学、设计学、艺术专业；建筑专硕不按增列核心建议。':i<8?'目录前8种重要期刊 · 15分参考':'学院增列核心 · 10分参考；实际CSCD / CSSCI等收录可手动调整'}));
+function normalize(text:string){return text.toLowerCase().replace(/[\s\p{P}\p{S}]/gu,'');}
+export function findJournals(query:string){const parts=query.trim().split(/\s+/).map(normalize).filter(Boolean);return journals.filter(j=>parts.every(p=>[j.name,...j.aliases].some(n=>normalize(n).includes(p))));}
+export function journalSuggestion(name:string){return journals.find(j=>[j.name,...j.aliases].some(n=>normalize(n)===normalize(name)));}

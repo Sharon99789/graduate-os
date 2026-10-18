@@ -1,0 +1,29 @@
+{
+  "name": "graduate-os-email",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --noEmit && vite build && node scripts/build-pwa.mjs",
+    "test": "node --import tsx --test src/scoring.test.ts src/preview.test.ts src/sync.test.ts src/backups.test.ts src/supabaseTransport.test.ts",
+    "check:pwa": "node scripts/check-pwa.mjs"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "lucide-react": "^0.468.0",
+    "@supabase/supabase-js": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.0",
+    "tsx": "^4.20.0",
+    "@types/node": "^24.0.0",
+    "esbuild": "^0.25.0",
+    "drizzle-kit": "^0.31.0",
+    "drizzle-orm": "^0.44.0"
+  }
+}

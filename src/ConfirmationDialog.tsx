@@ -1,0 +1,6 @@
+import {useEffect,useRef} from 'react';
+export function ConfirmationDialog({title,message,confirmLabel='确认删除',onConfirm,onCancel}:{title:string;message:string;confirmLabel?:string;onConfirm:()=>void;onCancel:()=>void}){
+ const root=useRef<HTMLDivElement>(null);const cancel=useRef<HTMLButtonElement>(null);
+ useEffect(()=>{const previous=document.activeElement as HTMLElement|null;cancel.current?.focus();return()=>previous?.focus()},[]);
+ return <div className="modal-backdrop" onClick={onCancel}><div ref={root} className="modal confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message" onClick={e=>e.stopPropagation()} onKeyDown={e=>{if(e.key==='Escape')onCancel();if(e.key==='Tab'){const elements=root.current?.querySelectorAll<HTMLButtonElement>('button');if(elements?.length){const first=elements[0],last=elements[elements.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}}}}><h3 id="confirm-title">{title}</h3><p id="confirm-message">{message}</p><div className="form-bottom"><button ref={cancel} type="button" className="secondary" onClick={onCancel}>取消</button><button type="button" className="primary danger" onClick={onConfirm}>{confirmLabel}</button></div></div></div>;
+}
