@@ -20,6 +20,9 @@ jobs:
           VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
       - run: npm run check:pwa
+        env:
+          DEPLOY_BASE: /graduate-os/
+  
       - uses: actions/upload-artifact@v4
         with:
           name: graduate-os-website
