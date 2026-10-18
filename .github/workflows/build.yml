@@ -1,0 +1,27 @@
+name: Build and verify Graduate OS
+on:
+  workflow_dispatch:
+  push:
+    branches: [source-fixes]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+        env:
+          DEPLOY_BASE: /graduate-os/
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
+      - run: npm run check:pwa
+      - uses: actions/upload-artifact@v4
+        with:
+          name: graduate-os-website
+          path: dist/
+          include-hidden-files: true
