@@ -2,7 +2,7 @@ name: Build and verify Graduate OS
 on:
   workflow_dispatch:
   push:
-    branches: [source-fixes]
+    branches: [graduate-os-test]
 jobs:
   build:
     runs-on: ubuntu-latest
